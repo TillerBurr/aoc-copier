@@ -1,0 +1,49 @@
+# {{ project_name }}
+
+These are the solutions for the [Advent of Code](https://adventofcode.com/) challenge for the year {{year}}.
+
+This repository requires [rye](https://rye-up.com). Install dependencies using
+
+```shell
+rye sync
+```
+
+# Usage
+
+To begin, run the command
+
+```shell
+{{ project_name }} download-input -d 1 -y {{year}}
+```
+If the default name of `aoc{{year}}` (or any name ending in {{year}}) was used, you can omit the `-y {{year}}` part.
+
+You should now have a directory named `day01` containing the `part1.py` and `input.txt` files. Switch over to `day01` using `cd day01` The command should have output a link to the  Be sure to copy the example data into `SAMPLE_INPUT`
+and the expected solution into `EXPECTED`. Now, work on the problem. When you are ready to test a solution, test it by running the command
+
+```shell
+{{ project_name }} test -d 1 -p 1
+```
+
+If the test doesn't pass, keep working on a solution. If the test passes, run the following command to get the solution.
+
+```shell
+{{ project_name }} solve -d 1 -p 1
+```
+
+Now, submit that solution
+
+```shell
+{{ project_name }} submit-answer -d 1 -y {{year}} -p 1 -a <answer from above>
+```
+
+If correct, you should see `✅✅ Correct! ✅✅` and a new file called `part2.py` was created. This is just a duplicated version of the `part1.py`, but many times the code needs modifications for part 2. If you are not correct,
+or another error pops up, you may see something different and no `part2.py` will be created.
+
+Once solved, repeat the above steps after the file was downloaded, except now with `-p 2`.
+
+## Credits
+
+This repository was created with
+[Copier](https://copier.readthedocs.io/) and the
+[baurt/aoc-copier](https://github.com/baurt/aoc-copier)
+project template.

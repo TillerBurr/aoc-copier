@@ -1,0 +1,72 @@
+_templates_suffix: .jinja
+_subdirectory: project
+_envops:
+    keep_trailing_newline: true
+name:
+    type: str
+    help: What is the name of the author?
+    default: Person McPerson
+
+email:
+    type: str
+    help: Preferred email address?
+    default: person@mcperson.com
+year:
+    type: int
+    help: What Year is this for?
+    default: 2022
+
+project_name:
+    type: str
+    help: What would you like this project to be named?
+    default: "aoc{{ year }}"
+
+project_slug:
+    type: str
+    help: "Project slug (used for GitHub, PyPI, etc.)"
+    default: "{{ project_name.lower().replace(' ', '-') }}"
+
+package_name:
+    type: str
+    help: "The name of the main Python package (should be a valid Python identifier)"
+    default: "{{ project_slug.replace('-', '_') }}"
+
+session_cookie:
+    type: str
+    secret: true
+    help: What is the session cookie for your Advent of Code account?
+
+git_init:
+    type: bool
+    help: Initialize and make a commit in a new a git repo?
+    default: no
+
+rye_sync:
+    type: bool
+    help: Run rye sync to create virtual environment?
+    default: no
+
+install_pre_commit:
+    type: bool
+    help: "Install pre-commit?"
+    default: no
+
+setup_gh_remote:
+    type: bool
+    help: Setup and push repository
+    when: "{{ git_init }}"
+    default: no
+
+github_username:
+    type: str
+    help: What's your github.com username?
+    when: "{{ git_init }}"
+    default: no
+
+_tasks:
+    - "{% if rye_sync %}rye sync{% endif %}"
+    - "{% if git_init %}git init{% endif %}"
+    - "{% if git_init %}git add .{% endif %}"
+    - "{% if git_init %}git commit -m ':tada: Initial Commit :tada:'{% endif %}"
+    - "{% if install_pre_commit %}pre-commit install{% endif %}"
+    - "{% if setup_gh_remote %}gh repo create {{ github_username }}/aoc{{year}} -d 'Advent of Code {{year}}' --public --remote=origin --source=. --push{% endif %}"
