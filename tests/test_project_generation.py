@@ -79,11 +79,6 @@ def test_override_values(
         assert venv.exists()
 
 
-"""TODO write test for install_pre_commit, which should only be necessary when
-    rye_sync is true
-"""
-
-
 def test_pre_commit(copier_fixture: CopierFixture):
     copied = copier_fixture.copy(
         config_overrides={
