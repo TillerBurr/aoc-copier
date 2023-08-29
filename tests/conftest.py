@@ -1,7 +1,7 @@
 import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any
 
 import copier
 import pytest
@@ -43,16 +43,6 @@ class Ream:
     @property
     def get_config(self) -> dict[str, Any]:
         return self.config
-
-
-class CopierFixtureProtocol(Protocol):
-    def copy(
-        self,
-        config_overrides: dict[str, Any] = {},
-        template: Path | None = None,
-        dest_dir: str | None = None,
-    ) -> Ream:
-        ...
 
 
 class CopierFixture:

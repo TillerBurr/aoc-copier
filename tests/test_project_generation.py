@@ -44,9 +44,6 @@ def test_default_values(copier_fixture: CopierFixture):
     )
 
 
-# @pytest.mark.parametrize("install_pre_commit", [False, True])
-
-
 @pytest.mark.parametrize("rye_sync", [False, True])
 @pytest.mark.parametrize("git_init", [False, True])
 def test_override_values(
@@ -58,7 +55,7 @@ def test_override_values(
         config_overrides={"git_init": git_init, "rye_sync": rye_sync}
     )
     project_path = copied.project_path
-    if copied.agent.answers.user["git_init"]:
+    if git_init:
         completed_process = subprocess.run(
             ["git", "log", "-1"], cwd=project_path, capture_output=True
         )
@@ -66,11 +63,40 @@ def test_override_values(
 
         assert b":tada: Initial Commit :tada:" in completed_process.stdout
 
-    # TODO Write rye_sync checks, i.e. check .venv exists, rye run, etc.
+    if rye_sync:
+        completed_process = subprocess.run(
+            ["rye", "--version"], cwd=project_path, capture_output=True
+        )
+        assert completed_process.returncode == 0
+        assert completed_process.stdout.startswith(b"rye")
+        python = subprocess.run(
+            ["rye", "run", "python", "--version"], cwd=project_path, capture_output=True
+        )
+        assert python.returncode == 0
+        assert python.stdout.startswith(b"Python 3")
+
+        venv = Path(project_path) / ".venv"
+        assert venv.exists()
 
 
 """TODO write test for install_pre_commit, which should only be necessary when
     rye_sync is true
 """
 
-# TODO Change project_name, project_slug, package_name in tests.
+
+def test_pre_commit(copier_fixture: CopierFixture):
+    copied = copier_fixture.copy(
+        config_overrides={
+            "git_init": True,
+            "rye_sync": True,
+            "install_pre_commit": True,
+        }
+    )
+    project_path = copied.project_path
+
+    install_pre_commit = subprocess.run(
+        ["rye", "run", "pre-commit", "install"], cwd=project_path, capture_output=True
+    )
+    assert install_pre_commit.returncode == 0
+
+    assert install_pre_commit.stdout.startswith(b"pre-commit installed")
