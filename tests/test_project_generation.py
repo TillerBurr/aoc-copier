@@ -20,6 +20,8 @@ def _check_contents(
 def test_default_values(copier_fixture: CopierFixture):
     copied = copier_fixture.copy()
     print(copied.directory)
+    print(copied.exc)
+    print(copied.exit_code)
     project_path = copied.project_path
     print(project_path)
     agent = copied.agent
