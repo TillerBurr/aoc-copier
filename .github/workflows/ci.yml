@@ -25,4 +25,4 @@ jobs:
             - name: Sync Rye
               run: rye sync
             - name: Run Tests
-              run: rye run pytest
+              run: rye run pytest -s
