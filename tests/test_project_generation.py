@@ -19,17 +19,19 @@ def _check_contents(
 
 def test_default_values(copier_fixture: CopierFixture):
     copied = copier_fixture.copy()
-    assert copied.exit_code == 0
+    print(copied.directory)
+    print(copied.exc)
+    print(copied.exit_code)
     project_path = copied.project_path
+    print(project_path)
     agent = copied.agent
+    assert copied.exit_code == 0
     assert (project_path / f"src/{agent.answers.user['package_name']}").exists()
     env_file = (
         (project_path / f"src/{agent.answers.user['package_name']}/.env")
         .read_text()
         .strip()
     )
-    print(copied.get_config)
-    print(env_file)
     assert f"session={copied.get_config['session_cookie']}" in env_file
     _check_contents(
         project_path / "README.md",

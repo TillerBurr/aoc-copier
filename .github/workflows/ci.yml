@@ -1,0 +1,32 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                python-version: ["3.10", "3.11"]
+        steps:
+            - name: Setup Git
+              run: |
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --global user.name "github-actions"
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup Rye
+              uses: eifinger/setup-rye@v1
+              with:
+                  enable-cache: true
+            - name: Pin Python Version
+              run: rye pin ${{ matrix.python-version }}
+            - name: Sync Rye
+              run: rye sync
+            - name: Run Tests
+              run: rye run pytest
