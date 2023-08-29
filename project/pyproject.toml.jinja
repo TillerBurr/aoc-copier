@@ -3,9 +3,11 @@
 
 name = "{{ project_slug }}"
 version = "0.1.0"
-description = "Add your description here"
+description = "Advent of Code Solutions for {{year}}"
 authors = [{ name = "{{name}}", email = "{{email}}" }]
+{% if github_username %}
 repository = "https://github.com/{{ github_username }}/{{ project_slug }}"
+{% endif %}
 dependencies = [
     "httpx>=0.24.1",
     "rich>=13.5.2",
@@ -16,6 +18,8 @@ dependencies = [
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
+
+classifiers = ["Private :: Do Not Upload"]
 
 [project.scripts]
 {{ project_slug }}= '{{ package_name }}.cli:app'

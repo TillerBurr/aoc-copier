@@ -28,7 +28,11 @@ This project uses [rye] for dependency and virtual environment management. If th
 rye sync
 ```
 
-Similarly, if
+Similarly, you'll also have to run
+
+```shell
+rye run pre-commit install
+```
 
 [ruff]: https://beta.ruff.rs/docs/
 [black]: https://github.com/psf/black
