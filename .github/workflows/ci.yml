@@ -1,0 +1,27 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                python-version: ["3.10", "3.11"]
+        steps:
+            - name: Setup Rye
+              uses: eifinger/setup-rye@v1
+              with:
+                  enable-cache: true
+            - name: Pin Python Version
+              run: rye pin ${{ matrix.python-version }}
+            - name: Sync Rye
+              run: rye sync
+            - name: Run Tests
+              run: \
+                  rye run pytest
