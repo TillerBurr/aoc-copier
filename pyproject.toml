@@ -7,7 +7,7 @@ dependencies = [
     "pre-commit>=3.3.3",
     "pytest>=7.4.0",
     "copier>=8.1.0",
-    "pytest-copier>=0.1.0",
+    "pytest-copier>=0.4.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.10"
