@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 authors = [{ name = "Tyler Baur", email = "baur.tyler@gmail.com" }]
 dependencies = [
-    "pre-commit>=3.3.3",
+    "pre-commit>=4.5.1",
     "pytest>=7.4.0",
     "copier>=8.1.0",
     "pytest-copier>=0.1.0",
