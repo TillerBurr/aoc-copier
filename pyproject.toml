@@ -6,7 +6,7 @@ authors = [{ name = "Tyler Baur", email = "baur.tyler@gmail.com" }]
 dependencies = [
     "pre-commit>=3.3.3",
     "pytest>=7.4.0",
-    "copier>=8.1.0",
+    "copier>=9.14.3",
     "pytest-copier>=0.1.0",
 ]
 readme = "README.md"
